@@ -1,0 +1,24 @@
+[
+  {
+    "model": "addresses.address",
+    "pk": 1,
+    "fields": {
+      "name": "Google",
+      "url_field": "https://www.google.com/",
+      "status": 200,
+      "checked_at": "2018-10-02 00:00:00",
+      "created_at": "2018-10-02 00:00:00"
+    }
+  },
+  {
+    "model": "addresses.address",
+    "pk": 2,
+    "fields": {
+      "name": "Amazon",
+      "url_field": "https://www.amazon.com/",
+      "status": 200,
+      "checked_at": "2018-10-02 00:00:00",
+      "created_at": "2018-10-02 00:00:00"
+    }
+  }
+]
