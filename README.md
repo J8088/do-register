@@ -1,0 +1,1 @@
+After installing django server side to start project locally run 'npm instal' and then 'npm run dev' to build front-end part.  
