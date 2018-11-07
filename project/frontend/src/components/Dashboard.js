@@ -10,30 +10,25 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import TextField from '@material-ui/core/TextField';
-import {Done} from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
 import {mainListItems, secondaryListItems} from './listItems';
 import UrlsTable from './UrlsTable';
 import Grid from '@material-ui/core/Grid';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import DataProvider from "./DataProvider"
 import styles from "./DashboardStyles";
 
 
 class Dashboard extends React.Component {
   state = {
+    dynamic: false,
     open: true,
-    seconds: 10
+    period: 5
   };
-
-  constructor(props) {
-    super(props);
-    this.checkIntervalRef = React.createRef();
-  }
 
   handleDrawerOpen = () => {
     this.setState({open: true});
@@ -43,11 +38,17 @@ class Dashboard extends React.Component {
     this.setState({open: false});
   };
 
-  handleChange = () => {
+  handleChange = (event, checked) => {
+    this.setState({dynamic: checked});
+  };
+
+  handleChangePriod = (event) => {
+    this.setState({period: event.target.value > 3 || !event.target.value ? event.target.value : 3});
   };
 
   handleClick = () => {
-    this.setState(() => {});
+    this.setState(() => {
+    });
   };
 
   render() {
@@ -111,9 +112,10 @@ class Dashboard extends React.Component {
                 <TextField
                   id="check-interval"
                   label="Check Interval, sec"
-                  onChange={this.handleChange()}
-                  ref={this.checkIntervalRef}
                   type="number"
+                  disabled={this.state.dynamic}
+                  onChange={this.handleChangePriod}
+                  value={this.state.period}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -121,16 +123,25 @@ class Dashboard extends React.Component {
                 />
               </Grid>
               <Grid item xs={2}>
-                <Button variant="fab" mini color="secondary"
-                        aria-label="Done"
-                        onClick={this.handleClick}
-                        className={classes.button}>
-                  <Done/>
-                </Button>
+                <FormGroup row>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={this.state.dynamic}
+                        onChange={this.handleChange}
+                        value="dynamic"
+                        color="primary"
+                      />
+                    }
+                    label={this.state.dynamic ? 'Dynamic' : 'Static'}
+                  />
+                </FormGroup>
               </Grid>
             </Grid>
             <div className={classes.tableContainer}>
               <DataProvider endpoint="api/addresses"
+                            dynamic={this.state.dynamic}
+                            period={this.state.period}
                             render={data => <UrlsTable data={data}/>}/>
             </div>
           </main>

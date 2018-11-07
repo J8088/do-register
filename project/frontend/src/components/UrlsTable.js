@@ -16,6 +16,12 @@ const styles = {
   table: {
     minWidth: 700,
   },
+  bad: {
+    color: '#F44336',
+  },
+  good: {
+    color: '#009688'
+  }
 };
 
 
@@ -42,7 +48,7 @@ function UrlsTable(props) {
                 <TableCell>
                   <a href={n.urlAddress} target="_blank">{n.urlAddress}</a>
                 </TableCell>
-                <TableCell numeric>{n.status}</TableCell>
+                <TableCell numeric className={n.status === 200 ? classes.good : classes.bad}>{n.status}</TableCell>
               </TableRow>
             );
           })}
